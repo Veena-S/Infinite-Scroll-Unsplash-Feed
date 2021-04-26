@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import { SafeAreaView, View, FlatList, Image, Text, StatusBar } from 'react-native';
 import styles from "../Styles.js"
-import {UnsplashFeedContext, getUnsplashImageList} from '../appContextStore.jsx'
+import {UnsplashFeedContext, getUnsplashImageList, setPageCount} from '../appContextStore.jsx'
 
 /**
  * FeedList is the application component defined to support the display of
@@ -23,7 +23,7 @@ export default function FeedList() {
    * Get the first set of images from Unsplash
    */
   useEffect(() => {
-    getUnsplashImageList(dispatch);
+    getUnsplashImageList(dispatch, store.page);
   }, [])
 
   /**
@@ -41,15 +41,28 @@ export default function FeedList() {
     >
       <SingleImageItem imageData={item}/>
     </View>
-    
   )
+
+  /**
+   * Function that handles the "onEndReached" of FlatList
+   * This is invoked when when the scroll position gets within the 
+   * onEndReachedThreshold of the rendered content.
+   * 
+   * This funtion increments the page count by 1 and set in the state
+   */
+  const handleEndReached = () => {
+    const pageCount = store.page + 1;
+    dispatch(setPageCount({pageCount}));
+  }
   
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList numColumns={2}
+      <FlatList numColumns={3}
                 data={store.unsplashImageList}
                 renderItem={renderImage}
                 keyExtractor={item => item.id}
+                onEndReached={() => handleEndReached()}
+                onEndReachedThreshold={0}
                 columnWrapperStyle={styles.columnContainer}
       />
     </SafeAreaView>

@@ -15,12 +15,21 @@ const ACCESS_KEY_UNSPLASH_URL = '?client_id=6c446b49b72a4c559d9b9d67183d5c1de198
 
 // Stores the state across the application
 export const initialState = {
-  unsplashImageList: [],
+  unsplashImageList: [],  // Stores all the images that is fetched from Unasplash
+  page: 1,  // This represents the page count which s fetched from Unsplash`
+  // This indicates the last page available from the Unsplash with a given  number of
+  // items per page. Currently, the per page item count is 10, which is default for Unsplash
+  lastPage: 1,
 };
 
 // Action Types
 // To set the image list retrieved from Unsplahs
 const SET_UNSPLASH_IMAGE_LIST = 'SET_UNSPLASH_IMAGE_LIST';
+// To set the page count
+const SET_PAGE_COUNT = 'SET_PAGE_COUNT';
+// To set the last page
+// This need to be set only one time, after fetching the first page
+const SET_LAST_PAGE = 'SET_LAST_PAGE';
 
 // Reducer function that manipulates the state
 // It allows to set new state values based on the previous state
@@ -31,6 +40,14 @@ export function unsplashFeedReducer(state, action) {
         ...state,
         unsplashImageList: [...action.payload.unsplashImageList],
       };
+    case SET_PAGE_COUNT:
+      return {
+        ...state, page: action.payload.page,
+      }
+    case SET_LAST_PAGE:
+      return {
+        ...state, lastPage: action.payload.lastPage,
+      }
     default:
       return state;
   }
@@ -53,6 +70,34 @@ export function setUnsplashImageList(unsplashImageList) {
     type: SET_UNSPLASH_IMAGE_LIST,
     payload: {
       unsplashImageList: unsplashImageList,
+    },
+  };
+}
+
+/**
+ * Creates action object
+ * @param {Number} page - specifies the page number to be fetched on next call to Unsplash
+ * @returns - Action object
+ */
+export function setPageCount(page) {
+  return {
+    type: SET_PAGE_COUNT,
+    payload: {
+      page: page,
+    },
+  };
+}
+
+/**
+ * Creates the action object for last Page 
+ * @param {Number} lastPage - Sets the last page
+ * @returns - Action object
+ */
+export function setLastPage(lastPage) {
+  return{
+    type: SET_LAST_PAGE,
+    payload: {
+      lastPage: lastPage,
     },
   };
 }
@@ -104,10 +149,21 @@ export function UnsplashFeedProvider({ children }) {
 /**
  * This function gets the a list of images from Unsplash
  * @param {function} dispatch - dispatch method to call create Action object function
+ * @param {Number} page - page number to be requested
  */
-export function getUnsplashImageList(dispatch) {
-  return axios.get(`${BASE_UNSPLASH_URL}/photos${ACCESS_KEY_UNSPLASH_URL}`)
+export function getUnsplashImageList(dispatch, page) {
+  return axios.get(`${BASE_UNSPLASH_URL}/photos${ACCESS_KEY_UNSPLASH_URL}&page=${page}`)
     .then((result) => {
+      // console.log(result)
       dispatch(setUnsplashImageList(result.data));
+      // Set the total number of pages available
+      // Need to set only once
+      if(page === 1){
+        // Per each request to the Unsplash, it returns the per-page element count and the 
+        // total number of elements available.
+        // From this, calculate the last page
+        dispatch(setLastPage((result.headers["x-total"] /result.headers["x-per-page"])))
+      }
+
     });
 }
