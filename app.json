@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Implements an infinite scroll Unsplash API feed",
+    "githubUrl": "https://github.com/Veena-S/Infinite-Scroll-Unsplash-Feed"
   }
 }
