@@ -1,10 +1,10 @@
 import React, {useContext, useEffect} from 'react';
 import { SafeAreaView, View, FlatList,Text, Image, ActivityIndicator, Dimensions  } from 'react-native';
-import styles from "../Styles.js"
+import {styles, numberOfImagesPerRow, thumbWidth} from "../Styles.js"
 import {UnsplashFeedContext, getUnsplashImageList, setRefreshingStatus,
          setPageCount, unsetUnsplashImageList} from '../appContextStore.jsx'
 
-  const {height} = Dimensions.get('window');
+  
 
 /**
  * FeedList is the application component defined to support the display of
@@ -39,10 +39,12 @@ export default function FeedList() {
    */
   const SingleImageItem = ({imageData}) => (
       <View style={styles.imageColumn}>
-        <Image style={styles.thumb} source={{ uri: imageData.urls.thumb }} 
+        <Image style={styles.thumb} 
+              source={{ uri: imageData.urls.small }} 
+              resizeMode={'stretch'}
               PlaceholderContent={<ActivityIndicator />}/>
          <View style={ styles.imageCaptionView}>
-          <Text style={styles.imageCaption}>{imageData.description !== null ? imageData.description : imageData.alt_description}</Text>
+          <Text style={styles.imageCaption} numberOfLines={1} ellipsizeMode={'tail'}>{imageData.description !== null ? imageData.description : imageData.alt_description}</Text>
         </View>   
       </View>
   )
@@ -72,7 +74,7 @@ export default function FeedList() {
   }
   
   return (
-    <View style={{flex: 1, height: height}}>
+    <View style={styles.flatListContainer}>
       <FlatList 
                 // data is the image list from store
                 data={store.unsplashImageList}
@@ -82,7 +84,7 @@ export default function FeedList() {
                 onEndReachedThreshold={1}
                 // for supporting display in multiple columns
                 columnWrapperStyle={styles.columnContainer}
-                numColumns={2}
+                numColumns={numberOfImagesPerRow}
                 // for activity indicator
                 ListFooterComponent={() =>
                   store.loading ? null : <ActivityIndicator size="large" animating />}
