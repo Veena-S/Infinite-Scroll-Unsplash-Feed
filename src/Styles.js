@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginVertical: 20,
   },
   item: {
     backgroundColor: '#289',
@@ -21,8 +22,18 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
+  header:{
+    width: '100%',
+    height: '20%',
+    marginVertical: 10,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   title: {
-    fontSize: 32,
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#333',
+    letterSpacing: 1,
   },
   thumb: {
     width: thumbWidth,
@@ -65,6 +76,7 @@ export const styles = StyleSheet.create({
   flatListContainer: {
     flex: 1, 
     height: windowHeight,
+    marginVertical: 20,
   },
 });
 
