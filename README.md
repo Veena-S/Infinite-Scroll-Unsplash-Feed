@@ -10,4 +10,4 @@ It supports infinite scroll and pull to refresh features.
 
 1. Clone the repo
 2. Install all the dependencies using `npm install`
-3. Run the application by the command `expo start `
+3. Run the application by the command `expo start --tunnel`

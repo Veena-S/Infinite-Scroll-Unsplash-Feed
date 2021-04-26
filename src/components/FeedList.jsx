@@ -75,11 +75,6 @@ export default function FeedList() {
   
   return (
     <View style={styles.flatListContainer}>
-      <View style={styles.header}>
-        <Text style={styles.title}>
-            Unsplash Feeds
-        </Text>
-      </View>
       <FlatList 
                 // data is the image list from store
                 data={store.unsplashImageList}

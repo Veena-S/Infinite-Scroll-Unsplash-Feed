@@ -10,6 +10,11 @@ export default function App() {
   return (
     <UnsplashFeedProvider>
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>
+              Unsplash Feeds
+          </Text>
+        </View>
         <FeedList />
       </View>
     </UnsplashFeedProvider>

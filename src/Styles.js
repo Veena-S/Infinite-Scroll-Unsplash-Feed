@@ -24,8 +24,7 @@ export const styles = StyleSheet.create({
   },
   header:{
     width: '100%',
-    height: '20%',
-    marginVertical: 10,
+    height: '10%',    
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
