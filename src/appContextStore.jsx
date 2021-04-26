@@ -7,6 +7,7 @@
 
 import React, { useReducer } from 'react';
 import axios from 'axios';
+import { ActivityIndicator } from 'react-native';
 
 // Unsplash URL and access key
 const BASE_UNSPLASH_URL = `http://api.unsplash.com`;
@@ -23,6 +24,7 @@ export const initialState = {
   // while 10 is default for Unsplash
   lastPage: 1,
   loading: false, // indicates whether next page is loading or not
+  refreshing: false, // Set this true while waiting for new data from a refresh.
 };
 
 // Action Types
@@ -34,7 +36,10 @@ const SET_PAGE_COUNT = 'SET_PAGE_COUNT';
 // To set the last page
 // This need to be set only one time, after fetching the first page
 const SET_LAST_PAGE = 'SET_LAST_PAGE';
+// For activity indicator
 const SET_LOADING = 'SET_LOADING';
+// For refreshing
+const SET_REFRESHING = 'SET_REFRESHING';
 
 // Reducer function that manipulates the state
 // It allows to set new state values based on the previous state
@@ -61,6 +66,10 @@ export function unsplashFeedReducer(state, action) {
     case SET_LOADING:
       return {
         ...state, loading: action.payload.loading,
+      }
+    case SET_REFRESHING:
+      return {
+        ...state, refreshing: action.payload.refreshing,
       }
     default:
       return state;
@@ -122,11 +131,30 @@ export function setLastPage(lastPage) {
   };
 }
 
+/**
+ * 
+ * @param {Boolean} loading 
+ * @returns 
+ */
 export function setLoadingStatus(loading) {
   return {
     type: SET_LOADING,
     payload: {
       loading: loading,
+    }
+  }
+}
+
+/**
+ * 
+ * @param {Boolean} refreshing 
+ * @returns 
+ */
+export function setRefreshingStatus( refreshing) {
+  return {
+    type: SET_REFRESHING,
+    payload: {
+      refreshing: refreshing,
     }
   }
 }
@@ -186,6 +214,7 @@ export function getUnsplashImageList(dispatch, page) {
       // console.log(result)
       dispatch(setUnsplashImageList(result.data));
       dispatch(setLoadingStatus(false));
+      dispatch(setRefreshingStatus(false));
       // Set the total number of pages available
       // Need to set only once
       if(page === 1){

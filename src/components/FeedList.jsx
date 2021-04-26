@@ -1,7 +1,8 @@
 import React, {useContext, useEffect} from 'react';
 import { SafeAreaView, View, FlatList,List, Image, ActivityIndicator, Dimensions  } from 'react-native';
 import styles from "../Styles.js"
-import {UnsplashFeedContext, getUnsplashImageList, unsetUnsplashImageList, setPageCount} from '../appContextStore.jsx'
+import {UnsplashFeedContext, getUnsplashImageList, setRefreshingStatus,
+         setPageCount, unsetUnsplashImageList} from '../appContextStore.jsx'
 
   const {height} = Dimensions.get('window');
 
@@ -24,9 +25,10 @@ export default function FeedList() {
   /**
    * Get the first set of images from Unsplash
    */
-  useEffect(() => {
-    getUnsplashImageList(dispatch, store.page);
-  }, [])
+  // Commented - causes duplication of data
+  // useEffect(() => {
+  //   getUnsplashImageList(dispatch, store.page);
+  // }, [])
 
   useEffect(() => {
     getUnsplashImageList(dispatch, store.page);
@@ -47,15 +49,6 @@ export default function FeedList() {
     </View>
   )
 
-
-//   const renderImage = React.memo(item => {
-//   return (
-//     <View >
-//       <SingleImageItem imageData={item}/>
-//     </View>
-//   )
-// })
-
   /**
    * Function that handles the "onEndReached" of FlatList
    * This is invoked when when the scroll position gets within the 
@@ -67,19 +60,31 @@ export default function FeedList() {
     const pageCount = Number(store.page) + 1;
     dispatch(setPageCount(pageCount));
   }
+
+  const handleRefresh = () => {
+    dispatch(setRefreshingStatus(true));
+    dispatch(setPageCount(1));
+    dispatch(unsetUnsplashImageList());
+  }
   
   return (
     <View style={{flex: 1, height: height}}>
       <FlatList 
+                // data is the image list from store
                 data={store.unsplashImageList}
-                
                 keyExtractor={(item, index) => `${item.id}-${index}`}
+                // for infinite scroll support
                 onEndReached={() =>{ handleEndReached()}}
                 onEndReachedThreshold={1}
+                // for supporting display in multiple columns
                 columnWrapperStyle={styles.columnContainer}
                 numColumns={2}
+                // for activity indicator
                 ListFooterComponent={() =>
                   store.loading ? null : <ActivityIndicator size="large" animating />}
+                // for handling refresh on page pull
+                onRefresh={() =>{ handleRefresh()}}
+                refreshing={store.refreshing}
                 renderItem={renderImage}
       />
     </View>

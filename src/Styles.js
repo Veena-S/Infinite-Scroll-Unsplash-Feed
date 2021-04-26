@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
   columnContainer: {
     justifyContent: 'space-between',
     margin: 5,
-  }
+  },
+  
 });
 
 export default styles;
