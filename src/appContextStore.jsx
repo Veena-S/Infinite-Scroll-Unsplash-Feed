@@ -22,6 +22,7 @@ export const initialState = {
   // items per page. Currently, the per page item count is PER_PAGE_ELEMENTS, 
   // while 10 is default for Unsplash
   lastPage: 1,
+  loading: false, // indicates whether next page is loading or not
 };
 
 // Action Types
@@ -33,6 +34,7 @@ const SET_PAGE_COUNT = 'SET_PAGE_COUNT';
 // To set the last page
 // This need to be set only one time, after fetching the first page
 const SET_LAST_PAGE = 'SET_LAST_PAGE';
+const SET_LOADING = 'SET_LOADING';
 
 // Reducer function that manipulates the state
 // It allows to set new state values based on the previous state
@@ -55,6 +57,10 @@ export function unsplashFeedReducer(state, action) {
     case SET_LAST_PAGE:
       return {
         ...state, lastPage: action.payload.lastPage,
+      }
+    case SET_LOADING:
+      return {
+        ...state, loading: action.payload.loading,
       }
     default:
       return state;
@@ -116,6 +122,14 @@ export function setLastPage(lastPage) {
   };
 }
 
+export function setLoadingStatus(loading) {
+  return {
+    type: SET_LOADING,
+    payload: {
+      loading: loading,
+    }
+  }
+}
 
 /** ****************************************
  * ****************************************
@@ -166,10 +180,12 @@ export function UnsplashFeedProvider({ children }) {
  * @param {Number} page - page number to be requested
  */
 export function getUnsplashImageList(dispatch, page) {
+  dispatch(setLoadingStatus(true));
   return axios.get(`${BASE_UNSPLASH_URL}/photos${ACCESS_KEY_UNSPLASH_URL}&page=${Number(page)}&per_page=${PER_PAGE_ELEMENTS}`)
     .then((result) => {
       // console.log(result)
       dispatch(setUnsplashImageList(result.data));
+      dispatch(setLoadingStatus(false));
       // Set the total number of pages available
       // Need to set only once
       if(page === 1){

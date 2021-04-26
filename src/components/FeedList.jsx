@@ -3,6 +3,8 @@ import { SafeAreaView, View, FlatList,List, Image, ActivityIndicator, Dimensions
 import styles from "../Styles.js"
 import {UnsplashFeedContext, getUnsplashImageList, unsetUnsplashImageList, setPageCount} from '../appContextStore.jsx'
 
+  const {height} = Dimensions.get('window');
+
 /**
  * FeedList is the application component defined to support the display of
  * feed list. This component uses the FlatList react native component.
@@ -10,8 +12,6 @@ import {UnsplashFeedContext, getUnsplashImageList, unsetUnsplashImageList, setPa
  * @returns - Returns the list of photos from Unsplash
  */
 export default function FeedList() {
-
-  const {height} = Dimensions.get('window');
 
   /**
    * useContext accepts a context object and returns the current context
@@ -42,12 +42,19 @@ export default function FeedList() {
   )
 
   const renderImage = ({item}) => (
-    <View 
-    // style={styles.imageRow}
-    >
+    <View >
       <SingleImageItem imageData={item}/>
     </View>
   )
+
+
+//   const renderImage = React.memo(item => {
+//   return (
+//     <View >
+//       <SingleImageItem imageData={item}/>
+//     </View>
+//   )
+// })
 
   /**
    * Function that handles the "onEndReached" of FlatList
@@ -57,7 +64,6 @@ export default function FeedList() {
    * This funtion increments the page count by 1 and set in the state
    */
   const handleEndReached = () => {
-    console.log("handleEndReached")
     const pageCount = Number(store.page) + 1;
     dispatch(setPageCount(pageCount));
   }
@@ -66,12 +72,15 @@ export default function FeedList() {
     <View style={{flex: 1, height: height}}>
       <FlatList 
                 data={store.unsplashImageList}
-                renderItem={renderImage}
+                
                 keyExtractor={(item, index) => `${item.id}-${index}`}
                 onEndReached={() =>{ handleEndReached()}}
-                onEndReachedThreshold={5}
+                onEndReachedThreshold={1}
                 columnWrapperStyle={styles.columnContainer}
                 numColumns={2}
+                ListFooterComponent={() =>
+                  store.loading ? null : <ActivityIndicator size="large" animating />}
+                renderItem={renderImage}
       />
     </View>
   );
