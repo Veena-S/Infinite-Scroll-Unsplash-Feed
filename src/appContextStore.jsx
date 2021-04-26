@@ -178,6 +178,8 @@ export function getUnsplashImageList(dispatch, page) {
         // From this, calculate the last page
         dispatch(setLastPage(Math.ceil(result.headers["x-total"] /result.headers["x-per-page"])))
       }
-
+    })
+    .catch((error) => {
+      console.log(error.response)
     });
 }
