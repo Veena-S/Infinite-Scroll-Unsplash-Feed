@@ -10,8 +10,6 @@ export default function App() {
   return (
     <UnsplashFeedProvider>
       <View style={styles.container}>
-        <Text>Open up App.js provider added !</Text>
-        <StatusBar style="auto" />
         <FeedList></FeedList>
       </View>
     </UnsplashFeedProvider>

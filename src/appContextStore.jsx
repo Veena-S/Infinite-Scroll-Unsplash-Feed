@@ -9,8 +9,8 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 
 // Unsplash URL and access key
-const BASE_UNSPLASH_URL = `api.unsplash.com`;
-const ACCESS_KEY_UNSPLASH = '?client_id=6c446b49b72a4c559d9b9d67183d5c1de1981d16f309063c3b994086e6ce1a26';
+const BASE_UNSPLASH_URL = `http://api.unsplash.com`;
+const ACCESS_KEY_UNSPLASH_URL = '?client_id=6c446b49b72a4c559d9b9d67183d5c1de1981d16f309063c3b994086e6ce1a26';
 
 
 // Stores the state across the application
@@ -106,7 +106,7 @@ export function UnsplashFeedProvider({ children }) {
  * @param {function} dispatch - dispatch method to call create Action object function
  */
 export function getUnsplashImageList(dispatch) {
-  return axios.get(`${BASE_UNSPLASH_URL}/photos${ACCESS_KEY_UNSPLASH}`)
+  return axios.get(`${BASE_UNSPLASH_URL}/photos${ACCESS_KEY_UNSPLASH_URL}`)
     .then((result) => {
       dispatch(setUnsplashImageList(result.data));
     });
