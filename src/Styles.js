@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#289',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -16,6 +16,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
   },
+  thumb: {
+    width: 200,
+    height: 200,
+  },
+  imageRow: { 
+    justifyContent: 'space-between',
+  },
+  imageColumn: {
+    margin: 5,
+  },
+  // same as image row
+  columnContainer: {
+    justifyContent: 'space-between',
+    margin: 5,
+  }
 });
 
 export default styles;
