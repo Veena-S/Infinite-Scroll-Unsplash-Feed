@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
-import { SafeAreaView, View, FlatList, Image, Text, StatusBar } from 'react-native';
+import { SafeAreaView, View, FlatList,List, Image, ActivityIndicator, Dimensions  } from 'react-native';
 import styles from "../Styles.js"
-import {UnsplashFeedContext, getUnsplashImageList, setPageCount} from '../appContextStore.jsx'
+import {UnsplashFeedContext, getUnsplashImageList, unsetUnsplashImageList, setPageCount} from '../appContextStore.jsx'
 
 /**
  * FeedList is the application component defined to support the display of
@@ -10,6 +10,8 @@ import {UnsplashFeedContext, getUnsplashImageList, setPageCount} from '../appCon
  * @returns - Returns the list of photos from Unsplash
  */
 export default function FeedList() {
+
+  const {height} = Dimensions.get('window');
 
   /**
    * useContext accepts a context object and returns the current context
@@ -25,6 +27,10 @@ export default function FeedList() {
   useEffect(() => {
     getUnsplashImageList(dispatch, store.page);
   }, [])
+
+  useEffect(() => {
+    getUnsplashImageList(dispatch, store.page);
+  }, [store.page])
 
   /**
    * Create component to display the list of images
@@ -51,20 +57,22 @@ export default function FeedList() {
    * This funtion increments the page count by 1 and set in the state
    */
   const handleEndReached = () => {
-    const pageCount = store.page + 1;
-    dispatch(setPageCount({pageCount}));
+    console.log("handleEndReached")
+    const pageCount = Number(store.page) + 1;
+    dispatch(setPageCount(pageCount));
   }
   
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList numColumns={3}
+    <View style={{flex: 1, height: height}}>
+      <FlatList 
                 data={store.unsplashImageList}
                 renderItem={renderImage}
-                keyExtractor={item => item.id}
-                onEndReached={() => handleEndReached()}
-                onEndReachedThreshold={0}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
+                onEndReached={() =>{ handleEndReached()}}
+                onEndReachedThreshold={5}
                 columnWrapperStyle={styles.columnContainer}
+                numColumns={2}
       />
-    </SafeAreaView>
+    </View>
   );
 }
