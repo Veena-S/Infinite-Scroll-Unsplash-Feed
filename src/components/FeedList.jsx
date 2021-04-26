@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import { SafeAreaView, View, FlatList,List, Image, ActivityIndicator, Dimensions  } from 'react-native';
+import { SafeAreaView, View, FlatList,Text, Image, ActivityIndicator, Dimensions  } from 'react-native';
 import styles from "../Styles.js"
 import {UnsplashFeedContext, getUnsplashImageList, setRefreshingStatus,
          setPageCount, unsetUnsplashImageList} from '../appContextStore.jsx'
@@ -39,7 +39,11 @@ export default function FeedList() {
    */
   const SingleImageItem = ({imageData}) => (
       <View style={styles.imageColumn}>
-        <Image style={styles.thumb} source={{ uri: imageData.urls.thumb }} />
+        <Image style={styles.thumb} source={{ uri: imageData.urls.thumb }} 
+              PlaceholderContent={<ActivityIndicator />}/>
+         <View style={ styles.imageCaptionView}>
+          <Text style={styles.imageCaption}>{imageData.description !== null ? imageData.description : imageData.alt_description}</Text>
+        </View>   
       </View>
   )
 

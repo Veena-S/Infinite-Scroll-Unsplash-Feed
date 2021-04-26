@@ -2219,11 +2219,6 @@
     "split-string" "^3.0.2"
     "to-regex" "^3.0.1"
 
-"brcast@^2.0.0":
-  "integrity" "sha512-Tfn5JSE7hrUlFcOoaLzVvkbgIemIorMIyoMr3TgvszWW7jFt2C9PdeMLtysYD9RU0MmU17b69+XJG1eRY2OBRg=="
-  "resolved" "https://registry.npmjs.org/brcast/-/brcast-2.0.2.tgz"
-  "version" "2.0.2"
-
 "browserslist@^4.14.5", "browserslist@^4.16.4":
   "integrity" "sha512-C2HAjrM1AI/djrpAUU/tr4pml1DqLIzJKSLDBXBrNErl9ZCCTXdhwxdJjYc16953+mBWf7Lw+uUJgpgb8cN71A=="
   "resolved" "https://registry.yarnpkg.com/browserslist/-/browserslist-4.16.5.tgz"
@@ -3395,13 +3390,6 @@
   "integrity" "sha512-7yetJWqbS9sbn0vIfliPsFgoXMKn/YMF+Wuiog97x+urnSRRRZ7xB+uVkwGKzRgq9CDFfMQnE9ruL5DHv9c6Xg=="
   "resolved" "https://registry.yarnpkg.com/getenv/-/getenv-1.0.0.tgz"
   "version" "1.0.0"
-
-"glamorous-native@^2.0.0":
-  "integrity" "sha512-qGAs/ra91zhMgm35l8DK4I1Vwjmeu40VyGSDhwxp65ytYZCalkIoFNUxRpJhIpyJHZZXn3d1e/poXPcMUrWv6A=="
-  "resolved" "https://registry.npmjs.org/glamorous-native/-/glamorous-native-2.0.0.tgz"
-  "version" "2.0.0"
-  dependencies:
-    "brcast" "^2.0.0"
 
 "glob@^7.1.2", "glob@^7.1.3", "glob@^7.1.6", "glob@7.1.6":
   "integrity" "sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA=="
@@ -5228,7 +5216,7 @@
     "prop-types" "^15.6.0"
     "react-timer-mixin" "^0.13.4"
 
-"react-native@*", "react-native@>=0.14.0 && < 1", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz":
+"react-native@*", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz":
   "version" "0.63.2"
   dependencies:
     "@babel/runtime" "^7.0.0"
@@ -5269,7 +5257,7 @@
   "resolved" "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz"
   "version" "0.13.4"
 
-"react@*", "react@^16.13.1", "react@^16.8.0 || ^17.0.0", "react@>=0.14.5 || >=16.0.0-alpha.6", "react@>=16.5.1", "react@16.13.1":
+"react@*", "react@^16.13.1", "react@^16.8.0 || ^17.0.0", "react@>=16.5.1", "react@16.13.1":
   "integrity" "sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w=="
   "resolved" "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz"
   "version" "16.13.1"

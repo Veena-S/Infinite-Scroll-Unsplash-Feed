@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+const thumbWidth = 300;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -17,7 +19,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   thumb: {
-    width: 200,
+    width: thumbWidth,
     height: 200,
   },
   imageRow: { 
@@ -25,6 +27,20 @@ const styles = StyleSheet.create({
   },
   imageColumn: {
     margin: 5,
+  },
+  imageCaptionView: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  imageCaption: {
+    width: thumbWidth,
+    backgroundColor: '#fff0f0',
+    
   },
   // same as image row
   columnContainer: {
