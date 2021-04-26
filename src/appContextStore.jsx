@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /**
  * Defines Context and holds the global state for the complete application
  * Also, reducer function is defined in here

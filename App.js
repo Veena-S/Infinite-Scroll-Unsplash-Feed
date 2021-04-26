@@ -10,7 +10,7 @@ export default function App() {
   return (
     <UnsplashFeedProvider>
       <View style={styles.container}>
-        <FeedList></FeedList>
+        <FeedList />
       </View>
     </UnsplashFeedProvider>
   );
